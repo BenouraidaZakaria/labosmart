@@ -5,7 +5,7 @@
 <div class="container pt-5" >
     <div class="row justify-content-center">
         <div class="col-md-8">
-        <!-- @include('flash-message') -->
+        @include('flash-message')
             <div class="card">
             @if (Auth::user()->role == 'admin')
                 <h3 class="card-header">Utilisateurs</h3>
@@ -19,11 +19,11 @@
                 <h3 class="card-header">Patients </h3>
             @endif
                 <div class="card-body">
-                    <!-- @if (session('status'))
+                    @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
-                    @endif -->
+                    @endif
                     @if (Auth::user()->role == 'admin')
     <table class="table table-striped">
       <thead>
@@ -70,7 +70,7 @@
         @if($result->dateresult == $date->dateresult)
         <tr>
           <td>{{$result->test->libele}}</td>
-          <td>{{$result->valeur}}</td>
+          <td>{{$result->valeur}} {{$result->test->unite}}</td>
           @if($result->valeur < $result->test->valmin)
         <td class="text-danger">{{$result->test->commentairesimin}}</td>
         @elseif($result->valeur > $result->test->valmax)
@@ -107,6 +107,11 @@
       @endforeach
     </tbody>
     @endif
+    @if (Auth::user()->role == 'none')
+<div class="alert alert-warning alert-block">
+        <strong>Votre compte est toujous pas categorise</strong>
+</div>
+@endif
                   </div>    
                </div>
             </div>

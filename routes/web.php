@@ -23,9 +23,6 @@ use App\Http\Controllers\PDFController;
 
 Route::get('/', function () {
     return view('welcome');
-    // return response()->json([
-    //  'stuff' => phpinfo()
-    // ]);
 });
 
 Auth::routes();
@@ -33,16 +30,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');   
 
 Route::group(['middleware' => ['auth','isAdmin']], function () {
-    
     Route::prefix('admin')->group(function () {
-        
-        // Route::get('/', function () {
-            //     return view('admins.index');
-            // });
-            
-            
             Route::resource('users', UsersController::class);
             Route::delete('/user/delete/{id}', [UsersController::class, 'destroy'])->name('deleteuser');
+            Route::delete('/test/delete/{id}', [TestsController::class, 'destroy'])->name('deletetest');
+            Route::delete('/result/delete/{id}', [ResultsController::class, 'destroy'])->name('deleteresult');
         Route::resource('admins', AdminsController::class);
         Route::resource('patients', PatientsController::class);
         Route::resource('doctors', DoctorsController::class);
@@ -54,11 +46,6 @@ Route::group(['middleware' => ['auth','isDoctor']], function () {
     Route::get('/showresults/patient/{id}',[ShowResultsController::class,'index']);
     Route::prefix('doctor')->group(function () {
         Route::get('/showresults/patient/{id}/result/{date}',[ShowResultsController::class,'show'])->name('showresults');
-
-            // Route::get('/', function () {
-            //     return view('doctor.index');
-            // });
-            
     });
     });
 
@@ -69,7 +56,5 @@ Route::group(['middleware' => ['auth','isDoctor']], function () {
                     return view('home');
                 });
             });
-        
-
     });
     Route::get('generate-invoice-pdf/{id}/{date}', array('as'=> 'generate.invoice.pdf', 'uses' => 'App\Http\Controllers\PDFController@generateInvoicePDF'));

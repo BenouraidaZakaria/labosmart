@@ -41,6 +41,12 @@ class PatientsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            // 'name' => 'required',
+            'doctor_id' => 'required',
+            'sexe' => 'required|max:8',
+            'cin' => 'required|unique:patients|max:8',
+        ]);
         $users = User::all();
 
         $patient = new Patient();
@@ -53,7 +59,7 @@ class PatientsController extends Controller
         $patient->save();
         $patients = Patient::all();
 
-        return view('patients.index',compact('users','patients'))->with('success','patient has been added');
+        return redirect()->route('patients.index',compact('users','patients'))->with('success','le patient a été ajouté');
     }
 
     /**
@@ -90,6 +96,13 @@ class PatientsController extends Controller
      */
     public function update(Request $request,$patient)
     {
+        $request->validate([
+            // 'name' => 'required',
+            'doctor_id' => 'required',
+            'sexe' => 'required|max:8',
+            'cin' => 'required|unique:patients|max:8',
+        ]);
+
         $user = User::findOrFail($patient);
 
         $patientedit =Patient::findOrFail($patient);
@@ -102,7 +115,7 @@ class PatientsController extends Controller
 
         $patients = Patient::all();
 
-        return view('patients.index',compact('user','patients'))->with('success','Patient has been updated');
+        return redirect()->route('patients.index',compact('user','patients'))->with('success','le patient a été modifié');
     }
 
     /**

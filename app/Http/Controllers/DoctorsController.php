@@ -39,6 +39,15 @@ class DoctorsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'sexe' => 'required',
+            'user_id' => 'required',
+            'specialite' => 'required',
+            'telephone' => 'required|unique:doctors|max:10',
+        ]);
+
+
+
         $users = User::all();
 
         $doctor = new Doctor();
@@ -51,7 +60,7 @@ class DoctorsController extends Controller
         $doctor->save();
         $doctors = Doctor::all();
 
-        return view('doctors.index',compact('users','doctors'))->with('success','Doctor has been added');
+        return redirect()->route('doctors.index',compact('users','doctors'))->with('success','le docteur a été ajouté');
     }
 
     /**
@@ -88,6 +97,12 @@ class DoctorsController extends Controller
      */
     public function update(Request $request,$doctor)
     {
+        $request->validate([
+            'sexe' => 'required',
+            'user_id' => 'required',
+            'specialite' => 'required',
+            'telephone' => 'required|unique:doctors|max:10',
+        ]);
         $user = User::findOrFail($doctor);
 
         $doctoredit =Doctor::findOrFail($doctor);
@@ -99,7 +114,7 @@ class DoctorsController extends Controller
         $doctoredit->user->save();
         $doctors = Doctor::all();
 
-        return view('doctors.index',compact('user','doctors'))->with('success','Doctor has been updated');
+        return redirect()->route('doctors.index',compact('user','doctors'))->with('success','le docteur a été modifié');
     }
 
     /**

@@ -28,6 +28,9 @@
             bottom:0;
             width:100%;
         }
+        canvas {
+  display: block;
+}
         a{text-decoration:none;}
         </style>
     </head>
@@ -81,29 +84,22 @@
                                     </form>
                                 </div>
                             </li>
-                            <a class="nav-link" href="{{ route('home') }}">{{ __('dashboard') }}</a>
+                            @if (Auth::user()->role !== 'none')
+                                    <a class="nav-link" href="{{ route('home') }}">{{ __('dashboard') }}</a>
+                            @endif
                         @endguest
-
                     </ul>
                 </div>
             </div>
         </nav>
-
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-
-
         <symbol id="check" viewBox="0 0 16 16">
 <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
   </symbol>
-
   <symbol id="people-circle" viewBox="0 0 16 16">
     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
   </symbol>
-
-
-
-
   <symbol id="user" viewBox="0 0 16 16">
   <path d="M4.243 4.757a3.757 3.757 0 115.851 3.119 6.006 6.006 0 013.9 5.339.75.75 0 01-.715.784H2.721a.75.75 0 01-.714-.784 6.006 6.006 0 013.9-5.34 3.753 3.753 0 01-1.664-3.118z"></path>
   </symbol>

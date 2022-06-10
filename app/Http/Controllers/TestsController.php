@@ -37,18 +37,29 @@ class TestsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'libele' => 'required',
+            'valmin' => 'required|lt:valmax',
+            'valmax' => 'required|gt:valmin',
+            'unite'=>'required',
+            'commentaire' => 'required',
+            'commentairesimin'=>'required',
+            'commentairesimax'=>'required',
+        ],
+   );
         $tests=Test::all();
         $test = new Test();
         $test->libele = $request->input('libele');
         $test->valmin = $request->input('valmin');
         $test->valmax = $request->input('valmax');
+        $test->unite = $request->input('unite');
         $test->commentaire = $request->input('commentaire');
         $test->commentairesimin = $request->input('commentairesimin');
         $test->commentairesimax = $request->input('commentairesimax');
 
         $test->save();
 
-        return view('tests.index',compact('tests'))->with('success','test has been added');
+        return redirect()->route('tests.index',compact('tests'))->with('success','le test a été ajouté');
     }
 
     /**
@@ -84,6 +95,15 @@ class TestsController extends Controller
      */
     public function update(Request $request, $test)
     {
+        $request->validate([
+            'libele' => 'required',
+            'valmin' => 'required|lt:valmax',
+            'valmax' => 'required|gt:valmin',
+            'commentaire' => 'required',
+            'unite'=>'required',
+            'commentairesimin'=>'required',
+            'commentairesimax'=>'required',
+        ]);
         $tests=Test::all();
         
         $testedit = Test::findOrFail($test);
@@ -91,13 +111,14 @@ class TestsController extends Controller
         $testedit->libele = $request->input('libele');
         $testedit->valmin = $request->input('valmin');
         $testedit->valmax = $request->input('valmax');
+        $testedit->unite = $request->input('unite');
         $testedit->commentaire = $request->input('commentaire');
         $testedit->commentairesimin = $request->input('commentairesimin');
         $testedit->commentairesimax = $request->input('commentairesimax');
 
         $testedit->save();
 
-        return view('tests.index',compact('tests'))->with('success','test has been added');
+        return redirect()->route('tests.index',compact('tests'))->with('success','le test a été modifié');
     }
 
     /**
@@ -108,6 +129,12 @@ class TestsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $test=Test::findOrFail($id);
+
+        $test->delete();
+
+        $tests = Test::all();
+
+        return redirect()->route('tests.index',compact('tests'))->with('success','le test a été supprimé');
     }
 }

@@ -2,7 +2,13 @@
 
 @section('content')
 <div class="container col-xxl-9 px-4 py-5">
-
+@auth
+@if (Auth::user()->role == 'none')
+<div class="alert alert-warning alert-block">
+        <strong>Votre compte est toujous pas categorise</strong>
+</div>
+@endif
+@endauth
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
       <div class="col-10 col-sm-8 col-lg-6">
         <img src="{{ asset('images\herodoc.svg') }}" class="d-block mx-lg-auto img-fluid" alt="labo image" width="700" height="500" loading="lazy">
@@ -13,10 +19,8 @@
       </div>
     </div>
   </div>
- 
   <div class="container px-4 py-5" id="icon-grid">
     <h2 class="pb-2 border-bottom">Avantages</h2>
-
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
       <div class="col d-flex align-items-start">
         <svg class="bi text-muted flex-shrink-0 me-3" fill="#0275D8" width="1.75em" height="1.75em"><use xlink:href="#check"></use></svg>

@@ -160,7 +160,10 @@
                                     </form>
                                 </div>
                             </li>
-                            <a class="nav-link" href="{{ route('home') }}">{{ __('dashboard') }}</a>
+                            @if (Auth::user()->role !== 'none')
+                                    <a class="nav-link" href="{{ route('home') }}">{{ __('dashboard') }}</a>
+                                
+                            @endif
                         @endguest
 
                     </ul>

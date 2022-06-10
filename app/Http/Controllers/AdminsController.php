@@ -49,7 +49,7 @@ class AdminsController extends Controller
 
         $admins = Admin::all();
 
-        return view('admins.index',compact('users','admins'))->with('success','admin has been added');
+        return redirect()->route('admins.index',compact('users','admins'))->with('success','l\'admin a été ajouté');
     }
 
     /**
@@ -94,7 +94,7 @@ class AdminsController extends Controller
         $adminedit->user->save();
         $admins = Admin::all();
 
-        return view('admins.index',compact('user','admins'))->with('success','admin has been updated');
+        return redirect()->route('admins.index',compact('user','admins'))->with('success','l\'admin a été modifié');
     }
 
     /**

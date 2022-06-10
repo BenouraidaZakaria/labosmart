@@ -15,7 +15,15 @@
     @csrf
     @method('PUT')
 <div>
-   
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <label class="text-sm" for="name">name</label>
 <input class="text-lg border-1 form-control" type="text" id="name" name="name" value="{{$doctor->user->name}}">
 <label class="text-sm" for="sexe">sexe</label>

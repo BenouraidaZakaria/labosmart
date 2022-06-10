@@ -102,13 +102,17 @@
     <table class="table w-100 mt-10">
         <tr>
           <td>Test</td>
-          <td>valeur</td>
+          <td>valeur</td>   
+          <td>valeur minimun</td>
+          <td>valeur maximum</td>
           <td>commentaire</td>
         </tr>
         @foreach($results as $result)
         <tr>
           <td>{{$result->test->libele}}</td>
-          <td>{{$result->valeur}}</td>
+          <td>{{$result->test->valmin}} {{$result->test->unite}}</td>
+          <td>{{$result->test->valmax}} {{$result->test->unite}}</td>
+          <td>{{$result->valeur}} {{$result->test->unite}}</td>
           @if($result->valeur < $result->test->valmin)
         <td class="text-danger">{{$result->test->commentairesimin}}</td>
         @elseif($result->valeur > $result->test->valmax)

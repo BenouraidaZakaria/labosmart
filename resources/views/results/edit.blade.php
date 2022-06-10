@@ -15,6 +15,15 @@
     @csrf
     @method('PUT')
 <div>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <label class="text-sm" for="patient_id">select patient</label>
     <select type="text" class="form-control" name="patient_id">>
         @foreach($patients as $patient)

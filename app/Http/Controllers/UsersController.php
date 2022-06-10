@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Patient;
 class UsersController extends Controller
 {
     /**
@@ -82,8 +83,20 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $user=User::findOrFail($id);
+
+        if($user->role=='doctor'){
+            $patients=Patient::where('doctor_id',$user->doctor->id)->get();
+            foreach($patients as $patient){
+                $patient->user->role='none';
+                $patient->user->save();
+            }
         $user->delete();
-        redirect('/admin/users');
+        }
+        $user->delete();
+
+        $users = User::all();
+
+        return redirect()->route('users.index',compact('users'))->with('success','l\'utilisateur a été supprimé');
         
     }
 }

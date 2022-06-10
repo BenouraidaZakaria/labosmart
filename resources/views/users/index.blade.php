@@ -9,16 +9,16 @@
 <div class="container pt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-        <!-- @include('flash-message') -->
+        @include('flash-message')
             <div class="card">
                 <div class="card-header">LISTE DES UTILISATEURS </div>
 
                 <div class="card-body">
-                    <!-- @if (session('status'))
+                    @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
-                    @endif -->
+                    @endif
     <table class="table table-striped">
       <thead>
         <tr>
@@ -40,9 +40,6 @@
               <button class="btn btn-danger" type="submit">Delete</button>
             </form>
           </td>
-              <!-- <td>
-              </td> -->
-        
         </tr>
         @endforeach
       </tbody>

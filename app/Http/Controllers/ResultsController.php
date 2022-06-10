@@ -16,7 +16,7 @@ class ResultsController extends Controller
     public function index()
     {
         $tests=Test::all();
-        $results=Result::all();
+        $results=Result::paginate(7);
         $patients=Patient::all();
         return view('results.index',compact('results','tests','patients'));
     }
@@ -41,9 +41,18 @@ class ResultsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'patient_id' => 'required',
+            'test_id' => 'required',
+            'valeur' => 'required',
+            'dateresult' => 'required|date|before:tomorrow',
+        ],
+        [
+            'dateresult.before' => 'La date de résultat doit être superieur à aujourd\'hui',
+        ]);
         $patients = Patient::all();
         $tests= Test::all();
-        $results = Result::all();
+        $results = Result::paginate(5);
 
         $result = new Result();
         $result->test_id = $request->input('test_id');
@@ -52,7 +61,7 @@ class ResultsController extends Controller
         $result->dateresult = $request->input('dateresult');
         $result->save();
 
-        return view('results.index',compact('patients','results','tests'))->with('success','result has been added');
+        return redirect()->route('results.index',compact('patients','results','tests'))->with('success','le résultat a été ajouté');
     }
 
     /**
@@ -90,9 +99,18 @@ class ResultsController extends Controller
      */
     public function update(Request $request, $result)
     {
+        $request->validate([
+            'patient_id' => 'required',
+            'test_id' => 'required',
+            'valeur' => 'required',
+            'dateresult' => 'required|date|before:tomorrow',
+        ],
+        [
+            'dateresult.before' => 'La date de résultat doit être inferieure ou egale à aujourd\'hui',
+        ]);
         $patients = Patient::all();
         $tests= Test::all();
-        $results = Result::all();
+        $results = Result::paginate(7);
 
         $resultedit = Result::findOrFail($result);
         $resultedit->test_id = $request->input('test_id');
@@ -103,7 +121,7 @@ class ResultsController extends Controller
         $resultedit->test->save();
         $resultedit->save();
 
-        return view('results.index',compact('patients','results','tests'))->with('success','result has been added');
+        return redirect()->route('results.index',compact('patients','results','tests'))->with('success','le résultat a été modifié');
     }
 
     /**
@@ -114,5 +132,12 @@ class ResultsController extends Controller
      */
     public function destroy($id)
     {
+        $result=Result::findOrFail($id);
+
+        $result->delete();
+
+        $results = Result::all();
+
+        return redirect()->route('results.index',compact('results'))->with('success','le result a été supprimé');
     }
 }

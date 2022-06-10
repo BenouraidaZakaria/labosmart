@@ -5,10 +5,14 @@
 <div class="container pt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-        <!-- @include('flash-message') -->
+        @include('flash-message')
             <div class="card">
                 <div class="card-header">LISTE DES ADMINS </div>
-
+                @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                 <div class="card-body">
 <div class="container-fluid">
 <button type="button" class="btn btn-primary "><a class="text-white" href="{{route('admins.create')}}">Add admin</button>

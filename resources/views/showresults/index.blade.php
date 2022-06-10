@@ -22,7 +22,7 @@
                     @if($result->dateresult == $date->dateresult)
                     <tr>
                       <td>{{$result->test->libele}}</td>
-                      <td>{{$result->valeur}}</td>
+                      <td>{{$result->valeur}} {{$result->test->unite}}</td>
                       @if($result->valeur < $result->test->valmin)
                     <td class="text-danger">{{$result->test->commentairesimin}}</td>
                     @elseif($result->valeur > $result->test->valmax)
