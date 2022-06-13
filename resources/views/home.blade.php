@@ -19,12 +19,12 @@
                 <h3 class="card-header">Patients </h3>
             @endif
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (Auth::user()->role == 'admin')
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+               </div>
+           @endif
+           @if (Auth::user()->role == 'admin')
     <table class="table table-striped">
       <thead>
         <tr>
@@ -52,12 +52,14 @@
     </table>
     @endif
     @if (Auth::user()->role == 'patient')
-
     @foreach ($dates as $date )
     <table class="table table-striped">
       <h4 class="card-header d-flex justify-content-between">Bilan du : {{$date->dateresult}} 
+
       <a href="{{route('showresults',[$user->id,$date->dateresult])}}" class="btn btn-primary">voir bilan </a>
+      
       <a href="{{url('generate-invoice-pdf',[$user->id,$date->dateresult])}}" class="btn btn-primary">telecharger </a></h4>
+      
       <thead>
         <tr>
           <td>Test</td>

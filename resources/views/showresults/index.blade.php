@@ -9,7 +9,6 @@
             @foreach ($dates as $date )
             <table class="table table-striped ">
                   <div class="card-header d-flex justify-content-between"><h4>Bilan du : {{$date->dateresult}}</h4>
-                    <!-- <a href="{{route('showresults',[$patient->id,$date->dateresult])}}" class="btn btn-primary">voir bilan </a></div> -->
                   <thead>
                     <tr>
                       <td>Test</td>

@@ -100,7 +100,7 @@ class PatientsController extends Controller
             // 'name' => 'required',
             'doctor_id' => 'required',
             'sexe' => 'required|max:8',
-            'cin' => 'required|unique:patients|max:8',
+            'cin' => 'required|max:8',
         ]);
 
         $user = User::findOrFail($patient);

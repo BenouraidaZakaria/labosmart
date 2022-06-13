@@ -44,17 +44,12 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
 });
 Route::group(['middleware' => ['auth','isDoctor']], function () {
     Route::get('/showresults/patient/{id}',[ShowResultsController::class,'index']);
-    Route::prefix('doctor')->group(function () {
-        Route::get('/showresults/patient/{id}/result/{date}',[ShowResultsController::class,'show'])->name('showresults');
-    });
+    
     });
 
     Route::group(['middleware' => ['auth','isPatient']], function () {
         Route::get('/showresults/patient/{id}/result/{date}',[ShowResultsController::class,'show'])->name('showresults');
-        Route::prefix('patient')->group(function () {
-            Route::get('/home', function () {
-                    return view('home');
-                });
-            });
+
+        Route::get('generate-invoice-pdf/{id}/{date}', array('as'=> 'generate.invoice.pdf', 'uses' => 'App\Http\Controllers\PDFController@generateInvoicePDF'));
     });
-    Route::get('generate-invoice-pdf/{id}/{date}', array('as'=> 'generate.invoice.pdf', 'uses' => 'App\Http\Controllers\PDFController@generateInvoicePDF'));
+   
